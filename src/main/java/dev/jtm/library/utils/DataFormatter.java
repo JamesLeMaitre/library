@@ -47,6 +47,7 @@ public class DataFormatter<T> {
                 pow=valuesSplited[1];
             }
 
+
             FormatterDoubleString formatterDoubleString = new FormatterDoubleString<>();
             formatterDoubleString.setStatus(status);
             formatterDoubleString.setData(value);

@@ -1,20 +1,19 @@
 package dev.jtm.library.entities;
 
 import dev.jtm.library.entities.security.AppUsers;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Consultation {
+public class Incident {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idConsultation;
+    private  Long idIncident;
     private String libelle;
     private String description;
 
@@ -25,4 +24,6 @@ public class Consultation {
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private AppUsers users;
+
+
 }
