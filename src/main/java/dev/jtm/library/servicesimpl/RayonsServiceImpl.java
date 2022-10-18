@@ -21,7 +21,7 @@ public class RayonsServiceImpl implements RayonsService {
     }
 
     @Override
-    public Rayons save(Rayons rayons) {
+    public Rayons create(Rayons rayons) {
         return rayonsRepository.save(rayons);
     }
 
@@ -38,12 +38,13 @@ public class RayonsServiceImpl implements RayonsService {
         rayons1.setIdRayons(rayons.getIdRayons());
        rayons1.setAcronym(rayons.getAcronym());
        rayons1.setLibelle(rayons.getLibelle());
-        return null;
+        return rayonsRepository.save(rayons1);
     }
 
     @Override
     public Rayons getById(Long id) {
-        return null;
+        Rayons rayons = rayonsRepository.findById(id).orElse(null);
+        return rayons;
     }
 
     @Override

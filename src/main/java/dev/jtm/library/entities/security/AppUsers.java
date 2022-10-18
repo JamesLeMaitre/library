@@ -1,5 +1,6 @@
 package dev.jtm.library.entities.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.jtm.library.entities.*;
 import lombok.*;
 
@@ -16,8 +17,13 @@ import java.util.List;
 public class AppUsers {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
-    private String userName;
+    private String username;
+
+    private String email;
+
+    @JsonIgnore
     private String password;
+
     private Boolean isNotLocked = true;
 
     private Boolean isActive = false;

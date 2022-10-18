@@ -21,13 +21,23 @@ public class Document {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDocument;
     private String libelle;
-    private String descrption;
+    private String description;
     private String refer;
     private String isbn;
+    private String annee_edition;
+    private String nom;
+    private String prenom;
+    private String theme_titre;
+    private int quantite;
+    private int nbPages;
 
     @ManyToOne
     @JoinColumn(name="rayons_id", nullable=false)
     private Rayons rayons;
+
+    @ManyToOne
+    @JoinColumn(name="nature_id", nullable=false)
+    private Nature nature;
 
     @OneToMany(mappedBy = "document")
     private List<Consultation> consultations;

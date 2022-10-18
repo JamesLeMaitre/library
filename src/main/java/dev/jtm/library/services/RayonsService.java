@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface RayonsService {
     Collection<Rayons> getAll();
-    Rayons save(Rayons rayons);
+    Rayons create(Rayons rayons);
     void delete(Long id);
     Rayons edit(Rayons rayons,Long id);
     Rayons getById(Long id);
