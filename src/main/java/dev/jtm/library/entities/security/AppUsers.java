@@ -35,19 +35,10 @@ public class AppUsers {
     private List<Document> documents;
 
     @OneToMany(mappedBy = "users")
-    private List<Rayons> rayons;
-
-    @OneToMany(mappedBy = "users")
     private List<Consultation> consultations;
 
     @OneToMany(mappedBy = "users")
-    private List<Nature> natures;
-
-    @OneToMany(mappedBy = "users")
     private List<Archives> archives;
-
-    @OneToMany(mappedBy = "users")
-    private List<Incident> incidents;
 
     // Relation with role
     @JoinTable(name = "users_roles",

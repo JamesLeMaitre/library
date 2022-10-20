@@ -23,7 +23,7 @@ public class Rayons {
     @OneToMany(mappedBy="rayons")
     private List<Document> documents;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
-    private AppUsers users;
+    private AppUsers users;*/
 }

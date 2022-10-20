@@ -4,10 +4,13 @@ import dev.jtm.library.entities.Rayons;
 import dev.jtm.library.repositories.RayonsRepository;
 import dev.jtm.library.services.RayonsService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,7 +19,7 @@ public class RayonsServiceImpl implements RayonsService {
     private final RayonsRepository rayonsRepository;
 
     @Override
-    public Collection<Rayons> getAll() {
+    public List<Rayons> getAll() {
         return rayonsRepository.findAll();
     }
 

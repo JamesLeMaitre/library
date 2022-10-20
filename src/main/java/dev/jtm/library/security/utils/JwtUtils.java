@@ -60,7 +60,10 @@ public class JwtUtils {
     }
 
     public String getSubject(String token) {
+        System.out.println(getJWTVerifier().verify(token).getSubject());
         JWTVerifier verifier = getJWTVerifier();
+
+
         return verifier.verify(token).getSubject();
     }
 

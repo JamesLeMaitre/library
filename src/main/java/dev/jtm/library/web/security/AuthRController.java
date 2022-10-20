@@ -1,7 +1,6 @@
 package dev.jtm.library.web.security;
 
-import dev.jtm.library.security.exceptions.PasswordNotMatchException;
-import dev.jtm.library.security.exceptions.RoleNotFoundException;
+import dev.jtm.library.entities.security.AppUsers;
 import dev.jtm.library.security.request.LoginRequest;
 import dev.jtm.library.security.request.RegisterRequest;
 import dev.jtm.library.security.request.ResetPasswordRequest;
@@ -10,25 +9,18 @@ import dev.jtm.library.security.response.JwtResponse;
 import dev.jtm.library.services.security.AppUsersService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import javax.swing.*;
 import javax.validation.Valid;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
+import java.security.Principal;
 
 import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
 @AllArgsConstructor
@@ -58,7 +50,8 @@ public class AuthRController extends DataFormatter<AppUserResponse> {
             String token = userService.authenticate(loginRequest, authenticationManager);
             JwtResponse response = new JwtResponse();
             response.setAccess_token(token);
-            return  renderStringData(true,"login successful","Create ");
+            String s = response.getAccess_token();
+            return  renderStringData(true,s,"Create ");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));

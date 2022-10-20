@@ -21,7 +21,7 @@ public class Nature {
     @OneToMany(mappedBy = "nature")
     private List<Document> documentList;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+   /* @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private AppUsers users;
+    private AppUsers users;*/
 }

@@ -4,7 +4,7 @@ import dev.jtm.library.security.utils.constants.JwtConstant;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+
 @Data
 public class JwtResponse {
     private String access_token;

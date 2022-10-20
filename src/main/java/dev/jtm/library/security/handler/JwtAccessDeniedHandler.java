@@ -1,6 +1,5 @@
 package dev.jtm.library.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.jtm.library.security.filters.JwtAuthenticationEntryPoint;
 import dev.jtm.library.security.response.HttpErrorResponse;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,12 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import static dev.jtm.library.security.utils.constants.JavaConstant.ACCESS_DENIED_MESSAGE;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {

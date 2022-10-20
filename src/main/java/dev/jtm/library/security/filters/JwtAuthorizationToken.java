@@ -1,6 +1,7 @@
 package dev.jtm.library.security.filters;
 
 import dev.jtm.library.security.utils.JwtUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,14 +22,11 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.OK;
 
 @Component
+@AllArgsConstructor
 public class JwtAuthorizationToken extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
 
-    @Autowired
-    public JwtAuthorizationToken(JwtUtils jwtUtils) {
-        this.jwtUtils = jwtUtils;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -50,7 +48,12 @@ public class JwtAuthorizationToken extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
                 SecurityContextHolder.clearContext();
+                //SecurityContextHolder.clearContext();
             }
+        }
+        if(request.isRequestedSessionIdValid()){
+            System.out.println("OK Valide");
+            return ;
         }
 
         filterChain.doFilter(request, response);
