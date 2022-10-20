@@ -1,10 +1,11 @@
 package dev.jtm.library.entities;
 
-import dev.jtm.library.entities.security.AppUsers;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,9 +22,6 @@ public class Incident {
     @JoinColumn(name = "document_id",nullable = false)
     private Document  document;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private AppUsers users;
 
 
 }

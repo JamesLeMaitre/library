@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,10 +18,10 @@ public class Nature {
     private  String libelle;
     private String description;
 
-    @OneToOne(mappedBy = "nature")
-    private Document document;
+    @OneToMany(mappedBy = "nature")
+    private List<Document> documentList;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+   /* @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private AppUsers users;
+    private AppUsers users;*/
 }

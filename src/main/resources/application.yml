@@ -20,3 +20,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+jwt:
+  secret: h2HFkfef56dDd4DCC458dc4cCFEDfce85v7d5
