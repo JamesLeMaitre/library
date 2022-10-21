@@ -1,7 +1,8 @@
 package dev.jtm.library.web;
 
-import dev.jtm.library.entities.Nature;
-import dev.jtm.library.services.NatureService;
+import dev.jtm.library.entities.Archives;
+import dev.jtm.library.entities.Consultation;
+import dev.jtm.library.services.ArchivesService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,34 +16,36 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/nature/")
+@RequestMapping("/api/archives/")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-public class NatureRController extends DataFormatter<Nature> {
-    private final NatureService  natureService;
+public class ArchivesRController extends DataFormatter<Archives> {
+    private  final ArchivesService archivesService;
 
-    @PostMapping("create")
-    public Object create(@RequestBody() Nature data ){
+    @PostMapping("create/{idDocument}")
+    public Object create(@RequestBody() Archives data, @PathVariable Long idDocument){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if(authentication.isAuthenticated()){
             try {
-                return  renderData(true, natureService.create(data),"Create ");
+                return  renderData(true, archivesService.create(data,idDocument),"Create ");
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
                 e.printStackTrace(new PrintWriter(sw));
                 String exceptionAsString = sw.toString();
                 return  renderStringData(false,"Error while processing" ,exceptionAsString);
             }
-        } else return renderStringData(false,"Insufficient Authority", "Account not authenticated");
+        } else return renderStringData(false," Not Authenticated", "Account not authenticated");
+
 
     }
 
     @PutMapping(value = "edit/{id}")
-    public Object update(@PathVariable Long id, @RequestBody Nature  data) {
+    public Object update(@PathVariable Long id, @RequestBody Archives  data) {
         try {
-            if( natureService.getById(id)==null){
+            if( archivesService.getById(id)==null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
-            return  renderData(true, natureService.edit(data,id),"update done successfully");
+            return  renderData(true, archivesService.edit(data,id),"update done successfully");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
@@ -54,7 +57,7 @@ public class NatureRController extends DataFormatter<Nature> {
     @GetMapping("list")
     public Object List(){
         try {
-            List<Nature> items = natureService.getAll();
+            List<Archives> items = archivesService.getAll();
             return  renderDataArray(true,items,"list of element");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -67,7 +70,7 @@ public class NatureRController extends DataFormatter<Nature> {
     @GetMapping("by/id/{id}")
     public Object getById(@PathVariable("id") Long id){
         try {
-            Nature item = natureService.getById(id);
+            Archives item = archivesService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
@@ -83,11 +86,11 @@ public class NatureRController extends DataFormatter<Nature> {
     @DeleteMapping("delete/{id}")
     public Object delete(@PathVariable("id") Long id){
         try {
-            Nature item = natureService.getById(id);
+            Archives item = archivesService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
-            natureService.delete(id);
+            archivesService.delete(id);
             return  renderStringData(true,"Delete successfully","Done");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();

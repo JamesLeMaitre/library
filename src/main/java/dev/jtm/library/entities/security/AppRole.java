@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,4 +17,19 @@ public class AppRole {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRole;
     private String roleName;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
+
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,6 +18,22 @@ public class Incident {
     private  Long idIncident;
     private String libelle;
     private String description;
+    private Date dateJour;
+    private String resume;
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
+
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 
     @ManyToOne
     @JoinColumn(name = "document_id",nullable = false)
