@@ -1,5 +1,6 @@
 package dev.jtm.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.jtm.library.entities.security.AppUsers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("JpaAttributeTypeInspection")
@@ -30,6 +32,10 @@ public class Document {
     private String theme_titre;
     private int quantite;
     private int nbPages;
+    // Quantite restante après reservation
+    private int qte_res;
+    // Etat pour checker la disponibilité de livre
+    private boolean state;
 
     @ManyToOne
     @JoinColumn(name="rayons_id", nullable=false)
@@ -40,20 +46,28 @@ public class Document {
     private Nature nature;
 
     @OneToMany(mappedBy = "document")
+    @JsonIgnore
     private List<Consultation> consultations;
 
     @OneToMany(mappedBy = "document")
+    @JsonIgnore
     private List<Incident> incidents;
 
     @OneToMany(mappedBy = "document")
+    @JsonIgnore
     private Collection<Reservation> reservations= new ArrayList<>();
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private AppUsers users;
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
 
-
-
-
-
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 }

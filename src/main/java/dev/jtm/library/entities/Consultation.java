@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,25 @@ public class Consultation {
     private Long idConsultation;
     private String libelle;
     private String description;
+    private String motif;
+    private Date dateConsul;
+    private String observation;
 
     @ManyToOne
     @JoinColumn(name = "document_id",nullable = false)
     private Document  document;
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private AppUsers users;
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
+
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 }

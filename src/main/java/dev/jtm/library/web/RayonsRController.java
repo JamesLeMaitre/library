@@ -4,6 +4,7 @@ import dev.jtm.library.entities.Rayons;
 import dev.jtm.library.servicesimpl.RayonsServiceImpl;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,13 @@ import java.io.StringWriter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rayons")
+@RequestMapping("/api/rayons/")
 @AllArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class RayonsRController extends DataFormatter<Rayons> {
     private final RayonsServiceImpl rayonsService;
 
-    @PostMapping("/create")
+    @PostMapping("create")
     public Object create(@RequestBody() Rayons data ){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.isAuthenticated()){
@@ -31,8 +33,6 @@ public class RayonsRController extends DataFormatter<Rayons> {
                 return  renderStringData(false,"Error while processing" ,exceptionAsString);
             }
         } else return renderStringData(false,"Not authenticated", "Account not authenticated");
-
-
     }
 
     @PutMapping(value = "edit/{id}")

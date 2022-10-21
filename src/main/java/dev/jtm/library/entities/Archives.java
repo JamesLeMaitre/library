@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -18,6 +19,21 @@ public class Archives {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private AppUsers users;
+    @JoinColumn(name="rayons_id", nullable=false)
+    private Rayons rayons;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
+
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 }

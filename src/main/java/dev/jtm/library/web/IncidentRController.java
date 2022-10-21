@@ -1,7 +1,7 @@
 package dev.jtm.library.web;
 
-import dev.jtm.library.entities.Nature;
-import dev.jtm.library.services.NatureService;
+import dev.jtm.library.entities.Incident;
+import dev.jtm.library.services.IncidentService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,17 +15,18 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/nature/")
+@RequestMapping("/api/incident/")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-public class NatureRController extends DataFormatter<Nature> {
-    private final NatureService  natureService;
+public class IncidentRController extends DataFormatter<Incident> {
+    private final IncidentService incidentService;
 
-    @PostMapping("create")
-    public Object create(@RequestBody() Nature data ){
+    @PostMapping("create/{idDocument}")
+    public Object create(@RequestBody() Incident data,@PathVariable Long idDocument){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if(authentication.isAuthenticated()){
             try {
-                return  renderData(true, natureService.create(data),"Create ");
+                return  renderData(true, incidentService.create(data,idDocument),"Create ");
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
                 e.printStackTrace(new PrintWriter(sw));
@@ -34,15 +35,16 @@ public class NatureRController extends DataFormatter<Nature> {
             }
         } else return renderStringData(false,"Insufficient Authority", "Account not authenticated");
 
+
     }
 
     @PutMapping(value = "edit/{id}")
-    public Object update(@PathVariable Long id, @RequestBody Nature  data) {
+    public Object update(@PathVariable Long id, @RequestBody Incident  data) {
         try {
-            if( natureService.getById(id)==null){
+            if( incidentService.getById(id)==null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
-            return  renderData(true, natureService.edit(data,id),"update done successfully");
+            return  renderData(true, incidentService.edit(data,id),"update done successfully");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
@@ -54,7 +56,7 @@ public class NatureRController extends DataFormatter<Nature> {
     @GetMapping("list")
     public Object List(){
         try {
-            List<Nature> items = natureService.getAll();
+            List<Incident> items = incidentService.getAll();
             return  renderDataArray(true,items,"list of element");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -67,7 +69,7 @@ public class NatureRController extends DataFormatter<Nature> {
     @GetMapping("by/id/{id}")
     public Object getById(@PathVariable("id") Long id){
         try {
-            Nature item = natureService.getById(id);
+            Incident item = incidentService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
@@ -83,11 +85,11 @@ public class NatureRController extends DataFormatter<Nature> {
     @DeleteMapping("delete/{id}")
     public Object delete(@PathVariable("id") Long id){
         try {
-            Nature item = natureService.getById(id);
+            Incident item = incidentService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
-            natureService.delete(id);
+            incidentService.delete(id);
             return  renderStringData(true,"Delete successfully","Done");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();

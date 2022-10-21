@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -29,16 +30,8 @@ public class AppUsers {
     private Boolean isActive = false;
 
     @OneToMany(mappedBy = "users")
+    @JsonIgnore
     private Collection<Reservation> reservations= new ArrayList<>();
-
-    @OneToMany(mappedBy = "users")
-    private List<Document> documents;
-
-    @OneToMany(mappedBy = "users")
-    private List<Consultation> consultations;
-
-    @OneToMany(mappedBy = "users")
-    private List<Archives> archives;
 
     // Relation with role
     @JoinTable(name = "users_roles",
@@ -47,5 +40,20 @@ public class AppUsers {
     @ManyToMany
     @ToString.Exclude
     private Collection<AppRole> roles = new ArrayList<>();
+
+    @Temporal(TemporalType.DATE)
+    private Date dateCreate;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateUpdate;
+    @PrePersist
+    private void setDateTime() {
+        dateCreate = dateUpdate = new Date();
+    }
+
+    @PreUpdate
+    private void updateDateTime() {
+        dateUpdate = new Date();
+    }
 
 }

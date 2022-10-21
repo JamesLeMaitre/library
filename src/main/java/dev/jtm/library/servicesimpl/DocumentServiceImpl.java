@@ -32,6 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
         Rayons rayons = rayonsRepository.findById(idRayons).orElse(null);
         document.setNature(nature);
         document.setRayons(rayons);
+        document.setQte_res(document.getQuantite());
         return documentRepository.save(document);
     }
 
@@ -43,8 +44,23 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Document edit(Document document, Long id) {
         Document document1 = documentRepository.findById(id).orElse(null);
+        assert document1 != null;
         document1.setIdDocument(document.getIdDocument());
-        return null;
+        document1.setRayons(document.getRayons());
+        document1.setAnnee_edition(document.getAnnee_edition());
+        document1.setNature(document.getNature());
+        document1.setDescription(document.getDescription());
+        document1.setIsbn(document.getIsbn());
+        document1.setNom(document.getNom());
+        document1.setPrenom(document.getPrenom());
+        document1.setLibelle(document.getLibelle());
+        document1.setNbPages(document.getNbPages());
+        document1.setQuantite(document.getQuantite());
+        document1.setQuantite(document.getQuantite());
+        document1.setTheme_titre(document.getTheme_titre());
+        document1.setRefer(document.getRefer());
+        document1.setState(document.isState());
+        return documentRepository.save(document1);
     }
 
     @Override
