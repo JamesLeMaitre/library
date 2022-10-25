@@ -52,6 +52,6 @@ public class RayonsServiceImpl implements RayonsService {
 
     @Override
     public int getCountAll() {
-        return 0;
+        return rayonsRepository.countRayonsByIdRayons();
     }
 }

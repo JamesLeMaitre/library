@@ -1,6 +1,7 @@
 package dev.jtm.library.services.security;
 
 import dev.jtm.library.entities.security.AppRole;
+import dev.jtm.library.entities.security.AppUsers;
 import dev.jtm.library.security.exceptions.PasswordNotMatchException;
 import dev.jtm.library.security.exceptions.RoleNotFoundException;
 import dev.jtm.library.security.request.LoginRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 public interface AppUsersService extends UserDetailsService {
     String authenticate(LoginRequest request, AuthenticationManager authenticationManager);
@@ -31,4 +33,6 @@ public interface AppUsersService extends UserDetailsService {
     AppUserResponse enabledAccount(String username);
 
     AppRole saveRole(AppRole role);
+
+    List<AppUsers> getAll();
 }

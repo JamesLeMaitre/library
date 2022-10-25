@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rayons/")
 @AllArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class RayonsRController extends DataFormatter<Rayons> {
     private final RayonsServiceImpl rayonsService;
 
@@ -78,6 +78,20 @@ public class RayonsRController extends DataFormatter<Rayons> {
             return  renderStringData(false,"Error while processing" ,exceptionAsString);
         }
     }
+
+    @GetMapping("count")
+    public Object countById() {
+            try {
+                String item = rayonsService.getCountAll() + "";
+                return renderStringData(false, item, "Element found");
+            } catch (Exception e) {
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                String exceptionAsString = sw.toString();
+                return renderStringData(false, "Error while processing", exceptionAsString);
+            }
+        }
+
 
     @DeleteMapping("delete/{id}")
     public Object delete(@PathVariable("id") Long id){

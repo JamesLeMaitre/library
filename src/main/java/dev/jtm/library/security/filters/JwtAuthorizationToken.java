@@ -46,6 +46,7 @@ public class JwtAuthorizationToken extends OncePerRequestFilter {
                 List<GrantedAuthority> authorities = jwtUtils.getAuthorities(token);
                 Authentication authentication = jwtUtils.getAuthentication(username, authorities, request);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
             } else {
                 SecurityContextHolder.clearContext();
                 //SecurityContextHolder.clearContext();

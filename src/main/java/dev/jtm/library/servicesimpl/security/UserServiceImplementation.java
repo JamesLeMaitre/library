@@ -16,7 +16,6 @@ import dev.jtm.library.services.security.AppUsersService;
 import dev.jtm.library.services.security.EmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,7 +63,7 @@ public class UserServiceImplementation implements AppUsersService {
         AppUserResponse response = new AppUserResponse();
         String username = authentication.getName();
         Optional<AppUsers> user = userRepository.findByUsername(username);
-        user.orElseThrow(() -> new UsernameNotFoundException("Utilisateur Non trouvée!"));
+        user.orElseThrow(() -> new UsernameNotFoundException("User Not found"));
         BeanUtils.copyProperties(user.get(), response);
         return response;
     }
@@ -129,7 +129,6 @@ public class UserServiceImplementation implements AppUsersService {
         AppUserResponse response = new AppUserResponse();
         Optional<AppUsers> user = userRepository.findByUsername(username);
         user.orElseThrow(() -> new UsernameNotFoundException("Utilisateur n'existe pas"));
-
         user.get().setIsActive(false);
         AppUsers userPassword = userRepository.save(user.get());
         BeanUtils.copyProperties(userPassword, response);
@@ -159,6 +158,11 @@ public class UserServiceImplementation implements AppUsersService {
         Optional<AppUsers> user = userRepository.findByUsername(username);
         user.orElseThrow(() -> new UsernameNotFoundException("Utilisateur n'existe pas"));
         user.get().getRoles().add(role.get());
+    }
+
+    @Override
+    public List<AppUsers> getAll(){
+       return userRepository.findAll();
     }
 
     private String buildEmail(String name, String link) {
