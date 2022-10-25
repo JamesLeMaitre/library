@@ -52,7 +52,6 @@ public class JwtAuthorizationToken extends OncePerRequestFilter {
             }
         }
         if(request.isRequestedSessionIdValid()){
-            System.out.println("OK Valide");
             return ;
         }
 
