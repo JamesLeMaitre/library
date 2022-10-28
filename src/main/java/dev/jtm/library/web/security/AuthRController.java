@@ -1,7 +1,6 @@
 package dev.jtm.library.web.security;
 
 import dev.jtm.library.entities.security.AppUsers;
-import dev.jtm.library.security.exceptions.RoleNotFoundException;
 import dev.jtm.library.security.request.LoginRequest;
 import dev.jtm.library.security.request.RegisterRequest;
 import dev.jtm.library.security.request.ResetPasswordRequest;
@@ -10,21 +9,20 @@ import dev.jtm.library.security.response.JwtResponse;
 import dev.jtm.library.services.security.AppUsersService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.List;
+import java.security.Principal;
 
 import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL;
 
 @RestController
-@CrossOrigin("*")
 @AllArgsConstructor
 @CrossOrigin("*")
 @RequestMapping(API_BASE_URL)
@@ -32,18 +30,12 @@ public class AuthRController extends DataFormatter<AppUserResponse> {
     private final AppUsersService userService;
     private final AuthenticationManager authenticationManager;
 
-    @GetMapping("list")
-  public List<AppUsers> getAllUser(){
-        return userService.getAll();
-    }
-
 
 
     @PostMapping("register")
-    public Object register(@RequestBody @Valid RegisterRequest registerRequest) throws MessagingException, RoleNotFoundException {
-        AppUserResponse response = userService.storeUser(registerRequest);
+    public Object register(@RequestBody @Valid RegisterRequest registerRequest){
         try {
-            return  renderData(true, response,"Create ");
+            return  renderData(true, userService.storeUser(registerRequest),"Create ");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
