@@ -1,11 +1,19 @@
 package dev.jtm.library.web.security;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.jtm.library.entities.security.AppRole;
 import dev.jtm.library.entities.security.AppUsers;
+import dev.jtm.library.repositories.security.AppUsersRepository;
 import dev.jtm.library.security.request.LoginRequest;
 import dev.jtm.library.security.request.RegisterRequest;
 import dev.jtm.library.security.request.ResetPasswordRequest;
 import dev.jtm.library.security.response.AppUserResponse;
 import dev.jtm.library.security.response.JwtResponse;
+import dev.jtm.library.security.utils.constants.JwtConstant;
 import dev.jtm.library.services.security.AppUsersService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
@@ -15,10 +23,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL;
 
@@ -28,6 +43,8 @@ import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL
 @RequestMapping(API_BASE_URL)
 public class AuthRController extends DataFormatter<AppUserResponse> {
     private final AppUsersService userService;
+
+    private final AppUsersRepository usersRepository;
     private final AuthenticationManager authenticationManager;
 
 
@@ -188,4 +205,43 @@ public class AuthRController extends DataFormatter<AppUserResponse> {
             return  renderStringData(false,"Error while processing" ,exceptionAsString);
         }
     }
+
+   /* @GetMapping(path = "/refreshToken")
+    public void refreshoToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String authorizationToken = request.getHeader(JwtConstant.HEADER_STRING);
+        if (authorizationToken != null && authorizationToken.startsWith(JwtConstant.TOKEN_PREFIX)) {
+            try {
+                String jwt = authorizationToken.substring(JwtConstant.TOKEN_PREFIX.length());
+                Algorithm algo = Algorithm.HMAC256(JwtConstant.SECRET);
+                JWTVerifier jWTVerifier = JWT.require(algo).build();
+                DecodedJWT decodedJWT = jWTVerifier.verify(jwt);
+
+                String username = decodedJWT.getSubject();
+
+                AppUsers appUser = usersRepository.getCurrentUser(username);
+
+                String jwtAccessToken = JWT.create()
+                        .withSubject(appUser.getUsername())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + JwtConstant.EXPIRATION_TIME))
+                        .withIssuer(request.getRequestURL().toString())
+                        .withClaim("roleName", appUser.getRoles().stream()
+                                .map(AppRole::getRoleName)
+                                .collect(Collectors.toList()))
+                        .sign(algo);
+
+                Map<String, String> idToken = new HashMap<>();
+                idToken.put(JWTUtil.ACCESS_TOKEN, jwtAccessToken);
+                idToken.put(JWTUtil.REFRESH_TOKEN, jwt);
+
+                response.setContentType("application/json");
+                new ObjectMapper().writeValue(response.getOutputStream(), idToken);
+
+            } catch (Exception ex) {
+                response.setHeader("error-message", ex.getMessage());
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
+        } else {
+            throw new RestDefaultException("Refresh token required");
+        }
+    }*/
 }
