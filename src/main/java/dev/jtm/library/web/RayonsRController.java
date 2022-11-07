@@ -83,7 +83,7 @@ public class RayonsRController extends DataFormatter<Rayons> {
     public Object countById() {
             try {
                 String item = rayonsService.getCountAll() + "";
-                return renderStringData(false, item, "Element found");
+                return renderStringData(true, item, "Element found");
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
                 e.printStackTrace(new PrintWriter(sw));

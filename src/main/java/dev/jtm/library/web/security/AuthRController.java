@@ -1,39 +1,22 @@
 package dev.jtm.library.web.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.jtm.library.entities.security.AppRole;
-import dev.jtm.library.entities.security.AppUsers;
 import dev.jtm.library.repositories.security.AppUsersRepository;
 import dev.jtm.library.security.request.LoginRequest;
 import dev.jtm.library.security.request.RegisterRequest;
 import dev.jtm.library.security.request.ResetPasswordRequest;
 import dev.jtm.library.security.response.AppUserResponse;
 import dev.jtm.library.security.response.JwtResponse;
-import dev.jtm.library.security.utils.constants.JwtConstant;
 import dev.jtm.library.services.security.AppUsersService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.security.Principal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL;
 
