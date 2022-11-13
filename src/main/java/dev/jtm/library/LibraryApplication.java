@@ -2,7 +2,6 @@ package dev.jtm.library;
 
 import dev.jtm.library.entities.security.AppRole;
 import dev.jtm.library.repositories.security.AppRoleRepository;
-import dev.jtm.library.security.request.RegisterRequest;
 import dev.jtm.library.services.security.AppUsersService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
