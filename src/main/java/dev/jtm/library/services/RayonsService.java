@@ -12,4 +12,6 @@ public interface RayonsService {
     Rayons edit(Rayons rayons,Long id);
     Rayons getById(Long id);
     int getCountAll();
+
+    List<Rayons> limitRayons();
 }

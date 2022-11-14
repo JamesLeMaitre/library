@@ -109,4 +109,17 @@ public class RayonsRController extends DataFormatter<Rayons> {
             return  renderStringData(false,"Error while processing" ,exceptionAsString);
         }
     }
+
+    @GetMapping("list-limit")
+    public Object ListLimit(){
+        try {
+            List<Rayons> items = rayonsService.limitRayons();
+            return  renderDataArray(true,items,"list of element");
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            String exceptionAsString = sw.toString();
+            return  renderStringData(false,"Error while processing" ,exceptionAsString);
+        }
+    }
 }
