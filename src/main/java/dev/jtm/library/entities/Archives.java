@@ -4,6 +4,8 @@ import dev.jtm.library.entities.security.AppUsers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,18 +24,11 @@ public class Archives {
     @JoinColumn(name="rayons_id", nullable=false)
     private Rayons rayons;
 
-    @Temporal(TemporalType.DATE)
+
+    @CreationTimestamp
     private Date dateCreate;
 
-    @Temporal(TemporalType.DATE)
+    @UpdateTimestamp
     private Date dateUpdate;
-    @PrePersist
-    private void setDateTime() {
-        dateCreate = dateUpdate = new Date();
-    }
 
-    @PreUpdate
-    private void updateDateTime() {
-        dateUpdate = new Date();
-    }
 }

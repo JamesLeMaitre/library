@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -59,15 +60,7 @@ public class Document {
     @Temporal(TemporalType.DATE)
     private Date dateCreate;
 
-    @Temporal(TemporalType.DATE)
+    @UpdateTimestamp
     private Date dateUpdate;
-    @PrePersist
-    private void setDateTime() {
-        dateCreate = dateUpdate = new Date();
-    }
 
-    @PreUpdate
-    private void updateDateTime() {
-        dateUpdate = new Date();
-    }
 }
