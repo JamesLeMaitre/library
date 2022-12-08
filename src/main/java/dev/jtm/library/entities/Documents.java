@@ -1,28 +1,28 @@
 package dev.jtm.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.jtm.library.entities.security.AppUsers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@SuppressWarnings("JpaAttributeTypeInspection")
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Document {
+@Table(name = "document")
+public class Documents {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDocument;
+    private Long id;
     private String libelle;
     private String description;
     private String refer;
@@ -50,14 +50,15 @@ public class Document {
     @JsonIgnore
     private List<Consultation> consultations;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(mappedBy = "documents")
     @JsonIgnore
     private List<Incident> incidents;
 
     @OneToMany(mappedBy = "document")
     @JsonIgnore
-    private Collection<Reservation> reservations= new ArrayList<>();
-    @Temporal(TemporalType.DATE)
+    private List<Reservation> reservations= new ArrayList<>();
+
+   @CreationTimestamp
     private Date dateCreate;
 
     @UpdateTimestamp

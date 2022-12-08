@@ -1,6 +1,6 @@
 package dev.jtm.library.servicesimpl;
 
-import dev.jtm.library.entities.Document;
+import dev.jtm.library.entities.Documents;
 import dev.jtm.library.entities.Nature;
 import dev.jtm.library.entities.Rayons;
 import dev.jtm.library.repositories.DocumentRepository;
@@ -22,12 +22,12 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
 
     @Override
-    public List<Document> getAll() {
+    public List<Documents> getAll() {
         return documentRepository.findAll();
     }
 
     @Override
-    public Document create(Document document, Long idNature, Long idRayons) {
+    public Documents create(Documents document, Long idNature, Long idRayons) {
         Nature nature = natureRepository.findById(idNature).orElse(null);
         Rayons rayons = rayonsRepository.findById(idRayons).orElse(null);
         document.setNature(nature);
@@ -42,10 +42,10 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document edit(Document document, Long id) {
-        Document document1 = documentRepository.findById(id).orElse(null);
+    public Documents edit(Documents document, Long id) {
+        Documents document1 = documentRepository.findById(id).orElse(null);
         assert document1 != null;
-        document1.setIdDocument(document.getIdDocument());
+        document1.setId(document.getId());
         document1.setRayons(document.getRayons());
         document1.setAnnee_edition(document.getAnnee_edition());
         document1.setNature(document.getNature());
@@ -64,7 +64,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document getById(Long id) {
+    public Documents getById(Long id) {
         return documentRepository.findById(id).orElse(null);
     }
 

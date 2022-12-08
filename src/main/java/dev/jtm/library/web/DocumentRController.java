@@ -1,9 +1,8 @@
 package dev.jtm.library.web;
 
-import dev.jtm.library.entities.Document;
-import dev.jtm.library.entities.Nature;
+
+import dev.jtm.library.entities.Documents;
 import dev.jtm.library.services.DocumentService;
-import dev.jtm.library.services.NatureService;
 import dev.jtm.library.utils.DataFormatter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/document/")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-public class DocumentRController extends DataFormatter<Document> {
+public class DocumentRController extends DataFormatter<Documents> {
     private final DocumentService documentService;
 
     @PostMapping("create/{idNature}/{idRayons}")
-    public Object create(@RequestBody() Document data,@PathVariable Long idNature, @PathVariable Long idRayons){
+    public Object create(@RequestBody() Documents data,@PathVariable Long idNature, @PathVariable Long idRayons){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //System.out.println(authentication.getAuthorities());
         if(authentication.isAuthenticated()){
@@ -41,7 +40,7 @@ public class DocumentRController extends DataFormatter<Document> {
     }
 
     @PutMapping(value = "edit/{id}")
-    public Object update(@PathVariable Long id, @RequestBody Document  data) {
+    public Object update(@PathVariable Long id, @RequestBody Documents  data) {
         try {
             if( documentService.getById(id)==null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
@@ -58,7 +57,7 @@ public class DocumentRController extends DataFormatter<Document> {
     @GetMapping("list")
     public Object List(){
         try {
-            List<Document> items = documentService.getAll();
+            List<Documents> items = documentService.getAll();
             return  renderDataArray(true,items,"list of element");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -71,7 +70,7 @@ public class DocumentRController extends DataFormatter<Document> {
     @GetMapping("by/id/{id}")
     public Object getById(@PathVariable("id") Long id){
         try {
-            Document item = documentService.getById(id);
+            Documents item = documentService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }
@@ -87,7 +86,7 @@ public class DocumentRController extends DataFormatter<Document> {
     @DeleteMapping("delete/{id}")
     public Object delete(@PathVariable("id") Long id){
         try {
-            Document item = documentService.getById(id);
+            Documents item = documentService.getById(id);
             if(item == null){
                 return  renderStringData(false,"Error while processing" ,"item not found");
             }

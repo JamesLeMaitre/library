@@ -1,7 +1,6 @@
 package dev.jtm.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.jtm.library.entities.security.AppUsers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,13 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 public class Nature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idNature;
+    private Long id;
     private  String libelle;
     private String description;
 
     @OneToMany(mappedBy = "nature")
     @JsonIgnore
-    private List<Document> documentList;
+    private List<Documents> documentList;
     @Temporal(TemporalType.DATE)
     private Date dateCreate;
 

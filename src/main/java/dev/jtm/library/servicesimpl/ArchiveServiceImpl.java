@@ -39,7 +39,7 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Override
     public Archives edit(Archives archives, Long id) {
         Archives archive = getById(id);
-        archive.setIdArchives(archives.getIdArchives());
+        archive.setId(archives.getId());
         archive.setDescription(archives.getDescription());
         archive.setLibelle(archives.getLibelle());
         archive.setRayons(archives.getRayons());

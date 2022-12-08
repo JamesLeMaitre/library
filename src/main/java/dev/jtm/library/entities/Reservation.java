@@ -4,6 +4,8 @@ import dev.jtm.library.entities.security.AppUsers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,10 +16,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idReservation;
+    private Long id;
     private String libelle;
     private String description;
     // Date de reservation
+    @CreationTimestamp
     private Date date_res;
     //Date retour
     private Date date_ret;
@@ -30,23 +33,16 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "document_id")
-    private Document document;
+    private Documents document;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private AppUsers users;
-    @Temporal(TemporalType.DATE)
+    @CreationTimestamp
     private Date dateCreate;
 
-    @Temporal(TemporalType.DATE)
+    @UpdateTimestamp
     private Date dateUpdate;
-    @PrePersist
-    private void setDateTime() {
-        dateCreate = dateUpdate = new Date();
-    }
 
-    @PreUpdate
-    private void updateDateTime() {
-        dateUpdate = new Date();
-    }
+
 }

@@ -18,13 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 public class Rayons {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRayons;
+    private Long id;
     private String libelle;
     private String acronym;
 
     @JsonIgnore
     @OneToMany(mappedBy="rayons")
-    private List<Document> documents;
+    private List<Documents> documents;
 
     @JsonIgnore
     @OneToMany(mappedBy="rayons")

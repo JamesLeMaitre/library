@@ -1,6 +1,7 @@
 package dev.jtm.library.servicesimpl;
 
-import dev.jtm.library.entities.Document;
+
+import dev.jtm.library.entities.Documents;
 import dev.jtm.library.entities.Incident;
 import dev.jtm.library.repositories.DocumentRepository;
 import dev.jtm.library.repositories.IncidentRepository;
@@ -26,9 +27,9 @@ public class IncidentServiceImpl implements IncidentService {
     @Override
     public Incident create(Incident incident, Long idDocument) {
         // On recupère le ID De document
-        Document document1 = documentRepository.findById(idDocument).orElse(null);
+        Documents document1 = documentRepository.findById(idDocument).orElse(null);
         // On set le id : le id est une clé étrangère dans la table INcident
-        incident.setDocument(document1);
+        incident.setDocuments(document1);
         // On enregistre l'opération
        return incidentRepository.save(incident);
 
@@ -45,9 +46,9 @@ public class IncidentServiceImpl implements IncidentService {
         // On declare une nouveau incident
         Incident incident1 = incidentRepository.findById(id).orElse(null);
         // on recupère les données des attibuts du champ puis on le modifie
-        assert incident1 != null;  // <-- On verifie que le id n'est pas null -->
-        incident1.setIdIncident(incident.getIdIncident());
-        incident1.setDocument(incident.getDocument());
+        assert incident1 != null : "ID null";  // <-- On verifie que le id n'est pas null -->
+        incident1.setId(incident.getId());
+        incident1.setDocuments(incident.getDocuments());
         incident1.setLibelle(incident.getLibelle());
         incident1.setDescription(incident.getDescription());
         incident1.setDateJour(incident.getDateJour());

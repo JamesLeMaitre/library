@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Archives {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idArchives;
+    private Long id;
     private String libelle;
     private String description;
 

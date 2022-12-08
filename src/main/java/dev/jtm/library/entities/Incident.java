@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Incident {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long idIncident;
+    private  Long id;
     private String libelle;
     private String description;
     private Date dateJour;
@@ -37,7 +37,7 @@ public class Incident {
 
     @ManyToOne
     @JoinColumn(name = "document_id",nullable = false)
-    private Document  document;
+    private Documents  documents;
 
 
 

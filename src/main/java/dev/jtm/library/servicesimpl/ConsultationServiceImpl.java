@@ -1,7 +1,7 @@
 package dev.jtm.library.servicesimpl;
 
 import dev.jtm.library.entities.Consultation;
-import dev.jtm.library.entities.Document;
+import dev.jtm.library.entities.Documents;
 import dev.jtm.library.repositories.ConsultationRepository;
 import dev.jtm.library.repositories.DocumentRepository;
 import dev.jtm.library.services.ConsultationService;
@@ -26,7 +26,7 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation create(Consultation consultation, Long idDocument) {
-        Document doc = documentRepository.findById(idDocument).orElse(null);
+        Documents doc = documentRepository.findById(idDocument).orElse(null);
         consultation.setDocument(doc);
         return consultationRepository.save(consultation);
     }
@@ -39,7 +39,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Override
     public Consultation edit(Consultation consultation, Long id) {
         Consultation cons = getById(id);
-        cons.setIdConsultation(consultation.getIdConsultation());
+        cons.setId(consultation.getId());
         cons.setDescription(consultation.getDescription());
         cons.setLibelle(consultation.getLibelle());
         cons.setDocument(consultation.getDocument());

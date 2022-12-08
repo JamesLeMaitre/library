@@ -1,14 +1,14 @@
 package dev.jtm.library.services;
 
-import dev.jtm.library.entities.Document;
+import dev.jtm.library.entities.Documents;
 
 import java.util.List;
 
 public interface DocumentService {
-    List<Document> getAll();
-    Document create(Document document,Long idNature,Long idRayons );
+    List<Documents> getAll();
+    Documents create(Documents document,Long idNature,Long idRayons );
     void delete(Long id);
-    Document edit(Document document,Long id);
-    Document getById(Long id);
+    Documents edit(Documents document,Long id);
+    Documents getById(Long id);
     int getCountAll();
 }

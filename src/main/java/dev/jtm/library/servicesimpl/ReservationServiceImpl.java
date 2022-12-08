@@ -1,6 +1,7 @@
 package dev.jtm.library.servicesimpl;
 
-import dev.jtm.library.entities.Document;
+
+import dev.jtm.library.entities.Documents;
 import dev.jtm.library.entities.Reservation;
 import dev.jtm.library.entities.security.AppUsers;
 import dev.jtm.library.repositories.DocumentRepository;
@@ -30,7 +31,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation create(Reservation reservation, Long idDocument) {
-        Document document = documentRepository.findById(idDocument).orElse(null);
+        Documents document = documentRepository.findById(idDocument).orElse(null);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         AppUsers user = appUsersRepository.getCurrentUser(username);

@@ -37,8 +37,8 @@ public class RayonsServiceImpl implements RayonsService {
     public Rayons edit(Rayons rayons, Long id) {
         Rayons rayons1 = rayonsRepository.findById(id).orElse(null);
 
-        assert rayons1 != null;
-        rayons1.setIdRayons(rayons.getIdRayons());
+        assert rayons1 != null : "ID null";
+        rayons1.setId(rayons.getId());
        rayons1.setAcronym(rayons.getAcronym());
        rayons1.setLibelle(rayons.getLibelle());
         return rayonsRepository.save(rayons1);

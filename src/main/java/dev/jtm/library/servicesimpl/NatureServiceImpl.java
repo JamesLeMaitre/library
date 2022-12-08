@@ -33,7 +33,7 @@ public class NatureServiceImpl implements NatureService {
     public Nature edit(Nature nature, Long id) {
         Nature na = natureRepository.findById(id).orElse(null);
         assert na != null;
-        na.setIdNature(nature.getIdNature());
+        na.setId(nature.getId());
         na.setLibelle(nature.getLibelle());
         na.setDescription(nature.getDescription());
         return natureRepository.save(na);

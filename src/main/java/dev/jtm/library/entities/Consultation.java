@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Consultation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idConsultation;
+    private Long id;
     private String libelle;
     private String description;
     private String motif;
@@ -26,7 +26,7 @@ public class Consultation {
 
     @ManyToOne
     @JoinColumn(name = "document_id",nullable = false)
-    private Document  document;
+    private Documents  document;
 
     @CreationTimestamp
     private Date dateCreate;
