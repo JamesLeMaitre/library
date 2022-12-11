@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rayons/")
 @AllArgsConstructor
+@CrossOrigin("*")
 @PreAuthorize("hasRole('ADMIN')")
 public class RayonsRController extends DataFormatter<Rayons> {
     private final RayonsServiceImpl rayonsService;
@@ -82,7 +83,7 @@ public class RayonsRController extends DataFormatter<Rayons> {
     @GetMapping("count")
     public Object countById() {
             try {
-                String item = rayonsService.getCountAll() + "";
+                String item = rayonsService.getCountAll()+"";
                 return renderStringData(true, item, "Element found");
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();

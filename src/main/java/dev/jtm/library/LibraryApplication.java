@@ -55,7 +55,6 @@ public class LibraryApplication {
 
     @Bean
     public CorsWebFilter corsWebFilter() {
-
         final CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Collections.singletonList("*"));
         corsConfig.setMaxAge(3600L);

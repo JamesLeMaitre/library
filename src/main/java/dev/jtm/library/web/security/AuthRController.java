@@ -22,7 +22,6 @@ import static dev.jtm.library.security.utils.constants.JavaConstant.API_BASE_URL
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
 @RequestMapping(API_BASE_URL)
 public class AuthRController extends DataFormatter<AppUserResponse> {
     private final AppUsersService userService;

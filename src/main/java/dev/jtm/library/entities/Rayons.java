@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,6 +24,8 @@ public class Rayons {
     private String libelle;
     private String acronym;
 
+    private Boolean used;
+
     @JsonIgnore
     @OneToMany(mappedBy="rayons")
     private List<Documents> documents;
@@ -30,20 +34,11 @@ public class Rayons {
     @OneToMany(mappedBy="rayons")
     private List<Archives> archives;
 
-    @Temporal(TemporalType.DATE)
+  @CreationTimestamp
     private Date dateCreate;
 
-    @Temporal(TemporalType.DATE)
+    @UpdateTimestamp
     private Date dateUpdate;
-    @PrePersist
-    private void setDateTime() {
-        dateCreate = dateUpdate = new Date();
-    }
-
-    @PreUpdate
-    private void updateDateTime() {
-        dateUpdate = new Date();
-    }
 
 /*    @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
