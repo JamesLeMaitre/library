@@ -10,6 +10,6 @@ public interface RayonsRepository extends JpaRepository<Rayons,Long> {
     @Query("SELECT count(r.idRayons) from Rayons r ")
     int countRayonsByIdRayons();
 
-    @Query("SELECT r FROM Rayons r WHERE r.idRayons<= 20 or NOT in ( SELECT r FROM Rayons r WHERE r.idRayons= 1 or r.idRayons=2)")
+    @Query("SELECT r FROM Rayons r WHERE r.idRayons<= 20 or NOT r.idRayons in  ( SELECT rs FROM Rayons rs WHERE rs.idRayons= 1 or rs.idRayons=2)")
     List<Rayons> limitRayons();
 }
