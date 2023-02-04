@@ -24,7 +24,6 @@ public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
         errorResponse.setStatusCode(FORBIDDEN.value());
         errorResponse.setReason(FORBIDDEN.getReasonPhrase());
         setMessage(response, errorResponse, FORBIDDEN_MESSAGE);
-        return;
     }
 
     public static void setMessage(HttpServletResponse response, HttpErrorResponse errorResponse, String forbiddenMessage) throws IOException {

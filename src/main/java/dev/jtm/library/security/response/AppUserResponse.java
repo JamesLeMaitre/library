@@ -10,12 +10,8 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class AppUserResponse {
     private String username;
-
     private String email;
-
     private Boolean isNotLocked;
-
     private Boolean isActive;
-
     private Collection<AppRole> roles;
 }
